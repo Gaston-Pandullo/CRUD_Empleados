@@ -30,5 +30,27 @@ namespace CRUD_Empleados.Controllers
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Lista));
         }
+        [HttpGet]
+        public async Task<IActionResult> Editar(int id)
+        {
+            Empleado empleado = await _dbContext.Empleados.FirstAsync(e => e.Id == id);
+            return View(empleado);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Editar(Empleado empleado)
+        {
+            _dbContext.Empleados.Update(empleado);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Lista));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            Empleado empleado = await _dbContext.Empleados.FirstAsync(e => e.Id == id);
+            _dbContext.Empleados.Remove(empleado);
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Lista));
+        }
     }
 }
